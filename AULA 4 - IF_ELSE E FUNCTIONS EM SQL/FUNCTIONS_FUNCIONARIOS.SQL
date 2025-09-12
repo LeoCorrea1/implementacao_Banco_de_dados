@@ -645,3 +645,44 @@ BEGIN
 END;
 GO
 SELECT dbo.fn_GanhaMaisQueSupervisor('12345678966') AS Resultado;
+
+-- 5)
+GO
+CREATE FUNCTION fn_AnoAposentadoria(@DataNasc DATE)
+RETURNS INT
+AS
+BEGIN
+    RETURN YEAR(@DataNasc) + 65;
+END;
+GO
+
+SELECT 
+    F.Pnome, 
+    F.Datanasc, 
+    dbo.fn_AnoAposentadoria(F.Datanasc) AS Ano_Aposentadoria
+FROM FUNCIONARIO AS F;
+
+
+-- 6)
+GO
+CREATE FUNCTION fn_TemMaisQueNDependentes(@N INT, @Cpf CHAR(11))
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @QtdDependentes INT;
+
+    SELECT @QtdDependentes = COUNT(*)
+    FROM DEPENDENTE
+    WHERE Fcpf = @Cpf;
+
+    RETURN CASE WHEN @QtdDependentes > @N THEN 1 ELSE 0 END;
+END;
+GO
+
+SELECT 
+    F.Pnome, 
+    F.Cpf, 
+    dbo.fn_TemMaisQueNDependentes(2, F.Cpf) AS TemMaisQue2Dependentes
+FROM FUNCIONARIO AS F;
+
+
