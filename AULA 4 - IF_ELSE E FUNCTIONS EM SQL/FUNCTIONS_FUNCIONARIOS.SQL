@@ -2,7 +2,7 @@ CREATE DATABASE FUNCIONARIOSBD;
 USE FUNCIONARIOSBD;
 
 
---Criação da tabela FUNCIONARIO
+--CriaÃ§Ã£o da tabela FUNCIONARIO
 CREATE TABLE FUNCIONARIO (
 	Pnome VARCHAR(15) NOT NULL,
     Minicial CHAR,
@@ -30,13 +30,13 @@ CREATE TABLE DEPARTAMENTO (
     FOREIGN KEY (Cpf_gerente) REFERENCES FUNCIONARIO(CPF)
 );
 
---Adiconando restição referencial em FUNCIONARO de DEPARTAMENTO
---Criando uma ALTERAÇÃO de Tabela
+--Adiconando restiÃ§Ã£o referencial em FUNCIONARO de DEPARTAMENTO
+--Criando uma ALTERAÃ‡ÃƒO de Tabela
 ALTER TABLE FUNCIONARIO
 ADD CONSTRAINT Dnr
 FOREIGN KEY (Dnr) REFERENCES DEPARTAMENTO (Dnumero);
 
---Criação da tabela de LOCALIZACAO_DEP
+--CriaÃ§Ã£o da tabela de LOCALIZACAO_DEP
 CREATE TABLE LOCALIZACAO_DEP (
 	Dnumero INT NOT NULL,
 	Dlocal VARCHAR (15) NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE PROJETO(
     FOREIGN KEY (Dnum) REFERENCES DEPARTAMENTO (Dnumero)
 );
 
---Criação da tabela TRABALHA_EM
+--CriaÃ§Ã£o da tabela TRABALHA_EM
 CREATE TABLE TRABALHA_EM(
 	Fcpf CHAR(11) NOT NULL,
     Pnr INT NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE TRABALHA_EM(
     FOREIGN KEY (Pnr) REFERENCES PROJETO(Projnumero)
 );
 
---Criação da tabela DEPENDENTE sem seleção do esquema
+--CriaÃ§Ã£o da tabela DEPENDENTE sem seleÃ§Ã£o do esquema
 CREATE TABLE DEPENDENTE(
 	Fcpf CHAR(11) NOT NULL,
     Nome_dependente VARCHAR(15) NOT NULL,
@@ -78,26 +78,26 @@ CREATE TABLE DEPENDENTE(
 
 --Inserindo valores no Departamento
 INSERT INTO DEPARTAMENTO (Dnome, Dnumero) VALUES('Pesquisa', 5);
-INSERT INTO DEPARTAMENTO (Dnome, Dnumero) VALUES('Administração', 4);
+INSERT INTO DEPARTAMENTO (Dnome, Dnumero) VALUES('AdministraÃ§Ã£o', 4);
 INSERT INTO DEPARTAMENTO (Dnome, Dnumero) VALUES('Matriz', 1);
 SELECT * FROM DEPARTAMENTO;
 
 --Inserindo funcionarios com cargo de gerencia DATE AAAA-MM-DD
-INSERT INTO FUNCIONARIO VALUES ( 'Jorge', 'E', 'Brito', '88866555576', '1937-11-10', 'Rua do Horto, 35, São Paulo, SP', 'M', 55000, NULL , 1 );
-INSERT INTO FUNCIONARIO VALUES ( 'Jennifer', 'S', 'Souza', '98765432168', '1941-06-20', 'Av Arthur de Lima, 54, Santo André, SP', 'F', 43000, '88866555576' , 4 );
-INSERT INTO FUNCIONARIO VALUES ( 'Fernando', 'T', 'Wong', '33344555587', '1955-12-08', 'Rua da Lapa, 34, São Paulo, SP', 'M', 40000, '88866555576' , 5 );
-INSERT INTO FUNCIONARIO VALUES ( 'João', 'B', 'Silva', '12345678966', '1965-01-09', 'Rua das Flores, 751, São Paulo, SP', 'M', 30000, '33344555587' , 5 );
+INSERT INTO FUNCIONARIO VALUES ( 'Jorge', 'E', 'Brito', '88866555576', '1937-11-10', 'Rua do Horto, 35, SÃ£o Paulo, SP', 'M', 55000, NULL , 1 );
+INSERT INTO FUNCIONARIO VALUES ( 'Jennifer', 'S', 'Souza', '98765432168', '1941-06-20', 'Av Arthur de Lima, 54, Santo AndrÃ©, SP', 'F', 43000, '88866555576' , 4 );
+INSERT INTO FUNCIONARIO VALUES ( 'Fernando', 'T', 'Wong', '33344555587', '1955-12-08', 'Rua da Lapa, 34, SÃ£o Paulo, SP', 'M', 40000, '88866555576' , 5 );
+INSERT INTO FUNCIONARIO VALUES ( 'JoÃ£o', 'B', 'Silva', '12345678966', '1965-01-09', 'Rua das Flores, 751, SÃ£o Paulo, SP', 'M', 30000, '33344555587' , 5 );
 INSERT INTO FUNCIONARIO VALUES ( 'Alice', 'J', 'Zelaya', '99988777767', '1968-01-19', 'Rua Souza Lima, 35, Curitiba, PR', 'F', 25000, '98765432168' , 4 );
-INSERT INTO FUNCIONARIO VALUES ( 'Ronaldo', 'K', 'Lima', '66688444476', '1962-09-15', 'Rua Rebouças, 65, Piracicaba, SP', 'M', 38000, '33344555587' , 5 );
-INSERT INTO FUNCIONARIO VALUES ( 'Joice', 'A', 'Leite', '45345345376', '1972-07-31', 'Av. Lucas Obes, 74, São Paulo, SP', 'F', 25000, '33344555587' , 5 );
-INSERT INTO FUNCIONARIO VALUES ( 'André', 'E', 'Brito', '98798798733', '1969-03-29', 'Rua Timbira, 35, São Paulo, SP', 'M', 25000, '98765432168' , 4 );
+INSERT INTO FUNCIONARIO VALUES ( 'Ronaldo', 'K', 'Lima', '66688444476', '1962-09-15', 'Rua RebouÃ§as, 65, Piracicaba, SP', 'M', 38000, '33344555587' , 5 );
+INSERT INTO FUNCIONARIO VALUES ( 'Joice', 'A', 'Leite', '45345345376', '1972-07-31', 'Av. Lucas Obes, 74, SÃ£o Paulo, SP', 'F', 25000, '33344555587' , 5 );
+INSERT INTO FUNCIONARIO VALUES ( 'AndrÃ©', 'E', 'Brito', '98798798733', '1969-03-29', 'Rua Timbira, 35, SÃ£o Paulo, SP', 'M', 25000, '98765432168' , 4 );
 
---Corrigindo erro de inserção
+--Corrigindo erro de inserÃ§Ã£o
 UPDATE FUNCIONARIO
 SET Endereco = 'Rua Reboucas, 65, Piracicaba, SP'
 WHERE Cpf = '66688444476';
 
---Recupera todas as informações de funcionários
+--Recupera todas as informaÃ§Ãµes de funcionÃ¡rios
 SELECT * FROM FUNCIONARIO;
 
 --Finzalindo o preenchimento da tabela DEPTARTAMENTO
@@ -110,26 +110,26 @@ WHERE Dnumero = 4;
 UPDATE DEPARTAMENTO
 SET Cpf_gerente = '88866555576', Data_inicio_gerente = '1981-06-19'
 WHERE Dnumero = 1;
---Recuperar todas as informações de departamento
+--Recuperar todas as informaÃ§Ãµes de departamento
 SELECT * FROM DEPARTAMENTO;
 
 --Prrencher a tabela LOCALIZACAO_DEP
-INSERT INTO LOCALIZACAO_DEP VALUES (1, 'São Paulo');
-INSERT INTO LOCALIZACAO_DEP VALUES (4, 'Mauá');
-INSERT INTO LOCALIZACAO_DEP VALUES (5, 'Santo André');
+INSERT INTO LOCALIZACAO_DEP VALUES (1, 'SÃ£o Paulo');
+INSERT INTO LOCALIZACAO_DEP VALUES (4, 'MauÃ¡');
+INSERT INTO LOCALIZACAO_DEP VALUES (5, 'Santo AndrÃ©');
 INSERT INTO LOCALIZACAO_DEP VALUES (5, 'Itu');
-INSERT INTO LOCALIZACAO_DEP VALUES (5, 'São Paulo');
---Recuperando informações de LOCALIZACAO_DEP
+INSERT INTO LOCALIZACAO_DEP VALUES (5, 'SÃ£o Paulo');
+--Recuperando informaÃ§Ãµes de LOCALIZACAO_DEP
 SELECT * FROM LOCALIZACAO_DEP;
 
 --Preenchendo a table PROJETO
-INSERT INTO PROJETO VALUES ('ProdutoX', 1, 'Santo André', 5);
+INSERT INTO PROJETO VALUES ('ProdutoX', 1, 'Santo AndrÃ©', 5);
 INSERT INTO PROJETO VALUES ('ProdutoY', 2, 'Itu', 5);
-INSERT INTO PROJETO VALUES ('ProdutoZ', 3, 'São Paulo', 5);
-INSERT INTO PROJETO VALUES ('Informatização', 10, 'Mauá', 4);
-INSERT INTO PROJETO VALUES ('Reorganização', 20, 'São Paulo', 1);
-INSERT INTO PROJETO VALUES ('Novosbenefícios', 30, 'Mauá', 4);
---Recuperando informações de PROJETO
+INSERT INTO PROJETO VALUES ('ProdutoZ', 3, 'SÃ£o Paulo', 5);
+INSERT INTO PROJETO VALUES ('InformatizaÃ§Ã£o', 10, 'MauÃ¡', 4);
+INSERT INTO PROJETO VALUES ('ReorganizaÃ§Ã£o', 20, 'SÃ£o Paulo', 1);
+INSERT INTO PROJETO VALUES ('NovosbenefÃ­cios', 30, 'MauÃ¡', 4);
+--Recuperando informaÃ§Ãµes de PROJETO
 SELECT * FROM PROJETO;
 
 --Preenchento TRABALHA_EM
@@ -176,8 +176,8 @@ VALUES('Carlos', 'A', 'Silva', '98765432100', '1985-04-12', 'Rua A, 123', 'M', 4
 
 --Novos funcionario e departaemtneo para Aula 03
 INSERT INTO FUNCIONARIO (Pnome, Minicial, Unome, Cpf, Datanasc, Endereco, Sexo, Salario, Cpf_supervisor, Dnr)
-VALUES ('Carlos', 'M', 'Ferreira', '12312312311', '1980-02-15', 'Av. Paulista, 1000, São Paulo, SP', 'M', 45000, NULL, NULL),
-('Mariana', 'L', 'Gomes', '32132132122', '1985-06-22', 'Rua das Acácias, 500, Rio de Janeiro, RJ', 'F', 42000, NULL, NULL),
+VALUES ('Carlos', 'M', 'Ferreira', '12312312311', '1980-02-15', 'Av. Paulista, 1000, SÃ£o Paulo, SP', 'M', 45000, NULL, NULL),
+('Mariana', 'L', 'Gomes', '32132132122', '1985-06-22', 'Rua das AcÃ¡cias, 500, Rio de Janeiro, RJ', 'F', 42000, NULL, NULL),
 ('Pedro', 'A', 'Silva', '65465465433', '1990-11-10', 'Rua da Praia, 200, Salvador, BA', 'M', 47000, NULL, NULL);
 
 INSERT INTO DEPARTAMENTO (Dnome, Dnumero)
@@ -190,7 +190,7 @@ VALUES ('Vendas', 6),
 
 SELECT * 
 FROM FUNCIONARIO
-WHERE FUNCIONARIO.Pnome like 'joão';
+WHERE FUNCIONARIO.Pnome like 'joÃ£o';
 
 SELECT * 
 FROM FUNCIONARIO 
@@ -203,12 +203,12 @@ AND FUNCIONARIO.Sexo LIKE 'M';
 
 SELECT *
 FROM FUNCIONARIO 
-WHERE FUNCIONARIO.Endereco LIKE '%São Paulo%' 
+WHERE FUNCIONARIO.Endereco LIKE '%SÃ£o Paulo%' 
 OR FUNCIONARIO.Endereco LIKE '%Curitiba%';
 
 SELECT *
 FROM FUNCIONARIO 
-WHERE FUNCIONARIO.Endereco NOT LIKE '%São Paulo%' 
+WHERE FUNCIONARIO.Endereco NOT LIKE '%SÃ£o Paulo%' 
 
 SELECT *
 FROM FUNCIONARIO 
@@ -312,7 +312,7 @@ FROM FUNCIONARIO
 INNER JOIN DEPARTAMENTO ON FUNCIONARIO.Cpf = DEPARTAMENTO.Cpf_gerente
 inner join TRABALHA_EM on FUNCIONARIO.Cpf = TRABALHA_EM.Fcpf
 inner join PROJETO ON PROJETO.Projnumero = TRABALHA_EM.Pnr
-WHERE PROJETO.Projlocal = 'Mauá';
+WHERE PROJETO.Projlocal = 'MauÃ¡';
 
 
 SELECT F.Pnome AS 'F_NOME' , F.Unome  AS 'F_SOBRENOME' , S.Pnome AS 'Supervisor'
@@ -577,3 +577,71 @@ SELECT
     dbo.fn_SalarioAnualComBonus(Salario, 20) AS 'Salario_Anual_20%'
 FROM FUNCIONARIO;
 
+-- 1) 
+CREATE FUNCTION fn_ProjetosPorFuncionario(@Cpf CHAR(11))
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT P.Projnome
+    FROM TRABALHA_EM AS T
+    INNER JOIN PROJETO AS P ON P.Projnumero = T.Pnr
+    WHERE T.Fcpf = @Cpf
+);
+GO
+SELECT * FROM dbo.fn_ProjetosPorFuncionario('12345678966');
+
+-- 2)
+CREATE FUNCTION fn_ListarDependentes(@Cpf CHAR(11))
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT D.Nome_dependente, D.Parentesco
+    FROM DEPENDENTE AS D
+    WHERE D.Fcpf = @Cpf
+);
+GO
+SELECT * FROM dbo.fn_ListarDependentes('12345678966');
+
+-- 3)
+CREATE FUNCTION fn_NomeSupervisor(@Cpf CHAR(11))
+RETURNS VARCHAR(100)
+AS
+BEGIN
+    DECLARE @NomeSupervisor VARCHAR(100);
+
+    SELECT @NomeSupervisor = S.Pnome + ' ' + S.Unome
+    FROM FUNCIONARIO AS F
+    INNER JOIN FUNCIONARIO AS S ON F.Cpf_supervisor = S.Cpf
+    WHERE F.Cpf = @Cpf;
+
+    RETURN @NomeSupervisor;
+END;
+GO
+SELECT dbo.fn_NomeSupervisor('12345678966') AS Supervisor;
+
+-- 4)
+CREATE FUNCTION fn_GanhaMaisQueSupervisor(@Cpf CHAR(11))
+RETURNS BIT
+AS
+BEGIN
+    DECLARE @SalarioFunc DECIMAL(10,2);
+    DECLARE @SalarioSupervisor DECIMAL(10,2);
+    DECLARE @Resultado BIT;
+
+    SELECT @SalarioFunc = F.Salario, 
+           @SalarioSupervisor = S.Salario
+    FROM FUNCIONARIO AS F
+    INNER JOIN FUNCIONARIO AS S ON F.Cpf_supervisor = S.Cpf
+    WHERE F.Cpf = @Cpf;
+
+    IF (@SalarioFunc > @SalarioSupervisor)
+        SET @Resultado = 1;
+    ELSE
+        SET @Resultado = 0;
+
+    RETURN @Resultado;
+END;
+GO
+SELECT dbo.fn_GanhaMaisQueSupervisor('12345678966') AS Resultado;
