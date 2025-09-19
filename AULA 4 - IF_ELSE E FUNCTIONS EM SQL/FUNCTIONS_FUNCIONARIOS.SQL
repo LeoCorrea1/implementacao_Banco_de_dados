@@ -686,3 +686,151 @@ SELECT
 FROM FUNCIONARIO AS F;
 
 
+--AULA 19/09 STORED PROCEDURE
+
+CREATE PROCEDURE usp_meuNome
+    @nome VARCHAR(50)
+AS
+BEGIN
+    PRINT 'Meu nome é ' + @nome;
+END
+GO
+
+EXEC usp_meuNome @nome = 'Leonardo';
+
+
+
+ALTER PROCEDURE usp_FuncionariosDP
+    @nomeDepartamento VARCHAR(100)
+AS
+BEGIN
+    SELECT F.Pnome + ' ' + F.Unome , D.Dnome AS NomeCompleto
+    FROM FUNCIONARIO AS F
+    INNER JOIN DEPARTAMENTO AS D
+        ON F.Dnr = D.Dnumero
+    WHERE D.Dnome = @nomeDepartamento;
+END
+GO
+
+
+EXEC usp_FuncionariosDP @nomeDepartamento = 'Administração';
+
+
+CREATE PROCEDURE usp_Funcionario
+WITH ENCRYPTION
+AS
+    SELECT*
+    FROM FUNCIONARIO
+
+EXEC usp_Funcionario;
+
+
+ALTER PROCEDURE usp_AttSalario
+    @cpf CHAR(50),
+    @salarioAdicional FLOAT 
+AS
+BEGIN
+    IF EXISTS (SELECT 1 FROM FUNCIONARIO WHERE Cpf = @cpf)
+        UPDATE FUNCIONARIO
+        SET Salario = Salario + @salarioAdicional
+        WHERE Cpf = @cpf;
+    ELSE
+        PRINT 'NAO HA FUNCIONARIO COM ESSE CPF !';
+END
+GO
+
+EXEC usp_AttSalario @cpf = '12312312311' , @salarioAdicional = 333;
+
+
+ALTER PROCEDURE usp_InsereFuncionario
+    @pnome VARCHAR(100),
+    @cpf CHAR(50),
+    @Unome VARCHAR(100)
+AS
+BEGIN
+    IF EXISTS (
+        SELECT 1 
+        FROM FUNCIONARIO 
+        WHERE Pnome = @pnome 
+          AND Unome = @Unome
+    )
+        PRINT 'JA EXISTE UM FUNCIONARIO COM ESSE NOME E SOBRENOME!';
+    ELSE
+    INSERT INTO FUNCIONARIO (Pnome, Cpf, Unome)
+    VALUES (@pnome, @cpf, @Unome);
+END
+GO
+
+EXEC usp_InsereFuncionario 
+    @cpf = '3213556333',
+    @pnome = 'Leonardo',
+    @Unome = 'Correa';
+
+
+
+CREATE PROCEDURE usp_InsereDepartamento
+    @Dnome VARCHAR(100),
+    @dNumero INT,
+    @local VARCHAR(100)
+AS
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM DEPARTAMENTO WHERE Dnome = @Dnome AND Dnumero = @dNumero)
+    BEGIN
+        INSERT INTO DEPARTAMENTO (Dnome, Dnumero)
+        VALUES (@Dnome, @dNumero);
+
+        INSERT INTO LOCALIZACAO_DEP (Dnumero, Dlocal)
+        VALUES (@dNumero, @local);
+    END
+    ELSE
+        PRINT 'JA EXISTE UM DEPARTAMENTO COM ESSE NOME E NUMERO!';
+END
+GO
+
+EXEC usp_InsereDepartamento
+    @Dnome = 'Informatica',
+    @dNumero = 22,
+    @local = 'Santa Maria';
+
+SELECT DEPARTAMENTO.Dnome , LOCALIZACAO_DEP.Dlocal
+FROM DEPARTAMENTO
+JOIN LOCALIZACAO_DEP ON DEPARTAMENTO.Dnumero = LOCALIZACAO_DEP.Dnumero;
+
+
+ALTER PROCEDURE usp_FuncionariosDP
+    @nomeDepartamento VARCHAR(100) = NULL
+AS
+BEGIN
+    IF @nomeDepartamento IS NULL
+    BEGIN
+        SELECT * FROM FUNCIONARIO
+    END
+
+    ELSE
+    BEGIN
+        SELECT F.Pnome + ' ' + F.Unome , D.Dnome AS NomeCompleto
+        FROM FUNCIONARIO AS F
+        INNER JOIN DEPARTAMENTO AS D
+            ON F.Dnr = D.Dnumero
+        WHERE D.Dnome = @nomeDepartamento;
+    END
+END
+GO
+
+EXEC usp_FuncionariosDP @nomeDepartamento = NULL ;
+EXEC usp_FuncionariosDP @nomeDepartamento = 'Pesquisa';
+
+
+ALTER PROCEDURE teste (@par1 AS INT OUTPUT)
+AS
+    SELECT @par1 * 2
+    
+RETURN
+
+DECLARE @par1 INT = 15;
+EXEC teste @par1 OUTPUT;
+PRINT @par1;
+
+
+
+
