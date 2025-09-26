@@ -1,22 +1,19 @@
--- 10 - Contar livros por categoria
+-- 10
 CREATE PROCEDURE ContarLivrosPorCategoria
 AS
 BEGIN
-    SELECT 
-        c.tipo_categoria AS Categoria, 
-        COUNT(l.isbn) AS TotalLivros
+    SELECT c.tipo_categoria, COUNT(l.isbn) AS total
     FROM Categoria c
     LEFT JOIN Livro l ON c.id = l.fk_categoria
     GROUP BY c.tipo_categoria;
 END;
 GO
 
--- 11 - Listar livros por nacionalidade do autor
+-- 11
 CREATE PROCEDURE ListarLivrosPorNacionalidade @nacionalidadeAutor VARCHAR(50)
 AS
 BEGIN
-    SELECT 
-        l.titulo AS Livro
+    SELECT l.titulo
     FROM Livro l
     JOIN LivroAutor la ON l.isbn = la.fk_livro
     JOIN Autor a ON la.fk_autor = a.id
@@ -24,7 +21,7 @@ BEGIN
 END;
 GO
 
--- 12 - Adicionar editora
+-- 12
 CREATE PROCEDURE AdicionarEditora @nomeEditora VARCHAR(100)
 AS
 BEGIN
@@ -32,7 +29,7 @@ BEGIN
 END;
 GO
 
--- 13 - Excluir editora
+-- 13
 CREATE PROCEDURE ExcluirEditora @idEditora INT
 AS
 BEGIN
@@ -40,32 +37,29 @@ BEGIN
 END;
 GO
 
--- 14 - Listar autores com seus livros
+-- 14
 CREATE PROCEDURE ListarAutoresComLivros
 AS
 BEGIN
-    SELECT 
-        a.nome AS Autor, 
-        l.titulo AS Livro
+    SELECT a.nome, l.titulo
     FROM Autor a
     JOIN LivroAutor la ON a.id = la.fk_autor
     JOIN Livro l ON la.fk_livro = l.isbn;
 END;
 GO
 
--- 15 - Calcular ano médio de publicação por categoria
+-- 15
 CREATE PROCEDURE CalcularAnoMedioPorCategoria @nomeCategoria VARCHAR(100)
 AS
 BEGIN
-    SELECT 
-        AVG(l.ano) AS AnoMedio
+    SELECT AVG(l.ano) AS ano_medio
     FROM Livro l
     JOIN Categoria c ON l.fk_categoria = c.id
     WHERE c.tipo_categoria = @nomeCategoria;
 END;
 GO
 
--- 16 - Associar autor a um livro
+-- 16
 CREATE PROCEDURE AssociarAutorLivro @idAutor INT, @isbnLivro VARCHAR(50)
 AS
 BEGIN
@@ -73,7 +67,7 @@ BEGIN
 END;
 GO
 
--- 17 - Remover autor de um livro
+-- 17
 CREATE PROCEDURE RemoverAutorDeLivro @idAutor INT, @isbnLivro VARCHAR(50)
 AS
 BEGIN
@@ -82,12 +76,11 @@ BEGIN
 END;
 GO
 
--- 18 - Listar livros com mais de um autor
+-- 18
 CREATE PROCEDURE ListarLivrosComMaisDeUmAutor
 AS
 BEGIN
-    SELECT 
-        l.titulo AS Livro
+    SELECT l.titulo
     FROM Livro l
     JOIN LivroAutor la ON l.isbn = la.fk_livro
     GROUP BY l.isbn, l.titulo
@@ -95,24 +88,22 @@ BEGIN
 END;
 GO
 
--- 19 - Listar livros sem autores
+-- 19
 CREATE PROCEDURE ListarLivrosSemAutores
 AS
 BEGIN
-    SELECT 
-        l.titulo AS Livro
+    SELECT l.titulo
     FROM Livro l
     LEFT JOIN LivroAutor la ON l.isbn = la.fk_livro
     WHERE la.fk_autor IS NULL;
 END;
 GO
 
--- 20 - Listar livros que não pertencem a uma editora específica
+-- 20
 CREATE PROCEDURE ListarLivrosSemEditora @idEditora INT
 AS
 BEGIN
-    SELECT 
-        l.titulo AS Livro
+    SELECT l.titulo
     FROM Livro l
     WHERE l.fk_editora <> @idEditora OR l.fk_editora IS NULL;
 END;
